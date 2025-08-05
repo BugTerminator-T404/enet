@@ -20,6 +20,17 @@ check_type_size("socklen_t" HAS_SOCKLEN_T BUILTIN_TYPES_ONLY)
 unset(CMAKE_EXTRA_INCLUDE_FILES)
 
 set(ENET_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
+set(INCLUDE_FILES
+    ${INCLUDE_FILES_PREFIX}/callbacks.h
+    ${INCLUDE_FILES_PREFIX}/enet.h
+    ${INCLUDE_FILES_PREFIX}/list.h
+    ${INCLUDE_FILES_PREFIX}/protocol.h
+    ${INCLUDE_FILES_PREFIX}/time.h
+    ${INCLUDE_FILES_PREFIX}/types.h
+    ${INCLUDE_FILES_PREFIX}/unix.h
+    ${INCLUDE_FILES_PREFIX}/utility.h
+    ${INCLUDE_FILES_PREFIX}/win32.h
+)
 set(ENET_SRC_FILES
     callbacks.c
     compress.c
