@@ -11,6 +11,8 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macOS-latest
+          - { runner: macos-14,       plat: iphoneos, arch: x86_64 }
+          - { runner: macos-14,       plat: iphoneos, arch: arm64 }
         lib_type: ['shared', 'static']
         build_type: ['RelWithDebInfo', 'Debug']
 
