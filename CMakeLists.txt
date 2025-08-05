@@ -19,8 +19,6 @@ set(CMAKE_EXTRA_INCLUDE_FILES "sys/types.h" "sys/socket.h")
 check_type_size("socklen_t" HAS_SOCKLEN_T BUILTIN_TYPES_ONLY)
 unset(CMAKE_EXTRA_INCLUDE_FILES)
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-
 set(ENET_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include/enet)
 set(INCLUDE_FILES
     ${ENET_INCLUDE_DIR}/callbacks.h
