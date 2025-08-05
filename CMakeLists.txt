@@ -21,15 +21,15 @@ unset(CMAKE_EXTRA_INCLUDE_FILES)
 
 set(ENET_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(INCLUDE_FILES
-    ${INCLUDE_FILES_PREFIX}/callbacks.h
-    ${INCLUDE_FILES_PREFIX}/enet.h
-    ${INCLUDE_FILES_PREFIX}/list.h
-    ${INCLUDE_FILES_PREFIX}/protocol.h
-    ${INCLUDE_FILES_PREFIX}/time.h
-    ${INCLUDE_FILES_PREFIX}/types.h
-    ${INCLUDE_FILES_PREFIX}/unix.h
-    ${INCLUDE_FILES_PREFIX}/utility.h
-    ${INCLUDE_FILES_PREFIX}/win32.h
+    ${ENET_INCLUDE_DIR}/callbacks.h
+    ${ENET_INCLUDE_DIR}/enet.h
+    ${ENET_INCLUDE_DIR}/list.h
+    ${ENET_INCLUDE_DIR}/protocol.h
+    ${ENET_INCLUDE_DIR}/time.h
+    ${ENET_INCLUDE_DIR}/types.h
+    ${ENET_INCLUDE_DIR}/unix.h
+    ${ENET_INCLUDE_DIR}/utility.h
+    ${ENET_INCLUDE_DIR}/win32.h
 )
 set(ENET_SRC_FILES
     callbacks.c
@@ -45,7 +45,18 @@ set(ENET_SRC_FILES
     interop_helpers.c
 )
 
-add_library(enet ${ENET_SRC_FILES})
+source_group(include FILES ${INCLUDE_FILES})
+source_group(source FILES ${SOURCE_FILES})
+
+if(WIN32 AND BUILD_SHARED_LIBS AND (MSVC OR CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+    add_definitions(-DENET_DLL=1)
+    add_definitions(-DENET_BUILDING_LIB)
+endif()
+
+add_library(enet
+    ${INCLUDE_FILES}
+    ${SOURCE_FILES}
+)
 target_include_directories(enet PUBLIC ${ENET_INCLUDE_DIR})
 
 if (BUILD_SHARED_LIBS)
@@ -97,3 +108,13 @@ endif()
 if(HAS_SOCKLEN_T)
     target_compile_definitions(enet PRIVATE HAS_SOCKLEN_T=1)
 endif()
+
+include(GNUInstallDirs)
+install(TARGETS enet
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/enet
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
