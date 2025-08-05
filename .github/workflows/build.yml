@@ -91,7 +91,13 @@ jobs:
         root_dir: enet/
         file_path: ${{ env.OUTPUT_FILE }}
         verbose: true
-
+        
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.OUTPUT_FILE }}
+        path: ${{ env.OUTPUT_FILE }}
+        
     # Release tags (for tags)
     - name: Upload binaries to release (Tag)
       uses: svenstaro/upload-release-action@v2
